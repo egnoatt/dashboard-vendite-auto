@@ -1,37 +1,41 @@
 import streamlit as st
-import pandas as pd
+from streamlit import markdown
 
-# Funzione per simulare il caricamento dei dati KPI (puoi sostituire con il caricamento di dati reali)
-def load_kpi_data():
-    data = {
-        "Categoria": ["Vendite Auto", "Acquisto Auto", "Riparazioni in garanzia", "Riparazioni e altro", "Assicurazioni e altro", "Servizi al Cliente"],
-        "Tipo": ["Nuovo", "Usato", "Nuovo", "Usato", "Nuovo", "Usato"],
-        "Settimanale": [10, 5, 3, 7, 2, 8],
-        "Mensile": [40, 30, 15, 28, 8, 25],
-        "Annuale": [480, 360, 180, 336, 96, 300]
-    }
-    df = pd.DataFrame(data)
-    return df
-
-# Carica i dati KPI simulati
-df_kpi = load_kpi_data()
+# Dati simulati delle vendite auto per ogni categoria temporale e tipo
+vendite_data = {
+    "Settimanale": {"Nuovo": 50, "Km0": 20, "Usato": 30},
+    "Mensile": {"Nuovo": 200, "Km0": 80, "Usato": 120},
+    "Annuale": {"Nuovo": 2400, "Km0": 960, "Usato": 1440}
+}
 
 # Titolo della dashboard
-st.title("Dashboard KPI Aziendali Globali")
+st.title("Dashboard Vendite Auto - KPI Temporali")
 
-# Selettore per la frequenza (Settimanale, Mensile, Annuale)
-frequenza = st.selectbox("Seleziona la frequenza", ["Settimanale", "Mensile", "Annuale"])
+# Funzione per creare rettangoli con metriche di vendite
+def display_sales_metrics(period, data):
+    # Aggiungi il contorno per ciascun periodo con markdown CSS
+    st.markdown(f"""
+    <div style="border:2px solid #4CAF50; padding: 10px; border-radius: 10px; margin-bottom: 20px;">
+        <h3 style="text-align: center;">Vendite Auto - {period}</h3>
+        <div style="display: flex; justify-content: space-around;">
+            <div style="text-align: center;">
+                <h4>Nuovo</h4>
+                <p style="font-size: 24px; font-weight: bold;">{data['Nuovo']}</p>
+            </div>
+            <div style="text-align: center;">
+                <h4>Km0</h4>
+                <p style="font-size: 24px; font-weight: bold;">{data['Km0']}</p>
+            </div>
+            <div style="text-align: center;">
+                <h4>Usato</h4>
+                <p style="font-size: 24px; font-weight: bold;">{data['Usato']}</p>
+            </div>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
 
-# Selettore per la categoria
-categoria = st.selectbox("Seleziona la categoria", df_kpi["Categoria"].unique())
+# Visualizzazione delle vendite per ogni periodo
+for periodo, dati in vendite_data.items():
+    display_sales_metrics(periodo, dati)
 
-# Filtra i dati in base alla selezione
-df_filtrato = df_kpi[(df_kpi["Categoria"] == categoria)]
-
-# Visualizzazione KPI
-st.subheader(f"KPI per {categoria} - Frequenza: {frequenza}")
-for index, row in df_filtrato.iterrows():
-    st.metric(label=f"{row['Tipo']} - {frequenza}", value=row[frequenza])
-
-# Messaggio di nota per espandere la dashboard
-st.write("Questa dashboard può essere ampliata con altri KPI e categorie man mano che si aggiungono nuovi dati.")
+st.write("Questa dashboard può essere ampliata per includere altri KPI e categorie.")

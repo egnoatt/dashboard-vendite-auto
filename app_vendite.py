@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 
 # Simulazione di un dataset giornaliero per "Vendite Auto"
 data = {
-    "data": pd.date_range(start="2023-01-01", end="2023-12-31"),  # Date giornaliere
+    "data": pd.date_range(start="2023-01-01", end="2024-12-31"),  # Date giornaliere
     "Nuovo": [50] * 365,  # Dati simulati per vendite "Nuovo"
     "Km0": [20] * 365,    # Dati simulati per vendite "Km0"
     "Usato": [30] * 365   # Dati simulati per vendite "Usato"
@@ -13,22 +13,22 @@ data = {
 # Creazione del DataFrame
 df = pd.DataFrame(data)
 
+# Funzione per ottenere le vendite per un periodo specifico
 def get_sales_for_period(df, period="settimanale"):
-    today = datetime.now()
+    """Filtra le vendite del DataFrame per il periodo specificato (settimanale, mensile, annuale)."""
+    today = datetime.now()  # Data corrente
     
+    # Filtra il dataset in base al periodo selezionato
     if period == "settimanale":
-        # Inizio della settimana corrente (lunedì)
-        start_date = today - timedelta(days=today.weekday())
+        start_date = today - timedelta(days=today.weekday())  # Inizio della settimana corrente (lunedì)
         filtered_df = df[(df["data"] >= start_date) & (df["data"] <= today)]
         
     elif period == "mensile":
-        # Inizio del mese corrente
-        start_date = today.replace(day=1)
+        start_date = today.replace(day=1)  # Inizio del mese corrente
         filtered_df = df[(df["data"] >= start_date) & (df["data"] <= today)]
         
     elif period == "annuale":
-        # Inizio dell'anno corrente
-        start_date = today.replace(month=1, day=1)
+        start_date = today.replace(month=1, day=1)  # Inizio dell'anno corrente
         filtered_df = df[(df["data"] >= start_date) & (df["data"] <= today)]
         
     # Somma le vendite per Nuovo, Km0 e Usato
@@ -45,6 +45,7 @@ st.title("Dashboard Vendite Auto - Dati Correnti")
 
 # Funzione per visualizzare i dati di un periodo specifico
 def display_period(period, data):
+    """Visualizza i dati di un periodo specifico in un formato tabellare."""
     st.markdown(f"""
     <div style="border:2px solid #333; padding: 10px; border-radius: 5px; text-align: center; margin-top: 20px;">
         <h3 style="font-size: 20px; margin-bottom: 10px;">{period}</h3>
@@ -65,6 +66,7 @@ def display_period(period, data):
 
 # Visualizzazione della sezione "Vendite Auto"
 def display_vendite_section():
+    """Crea una sezione della dashboard per le vendite auto, con colonne per i periodi settimanale, mensile e annuale."""
     st.subheader("Vendite Auto")
 
     # Creare le colonne per ogni periodo

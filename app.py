@@ -1,22 +1,28 @@
 import streamlit as st
 
-# Dati simulati delle vendite auto per ogni categoria temporale e tipo
+# Dati simulati delle vendite e acquisti auto per ogni categoria temporale e tipo
 vendite_data = {
     "Settimanale": {"Nuovo": 50, "Km0": 20, "Usato": 30},
     "Mensile": {"Nuovo": 200, "Km0": 80, "Usato": 120},
     "Annuale": {"Nuovo": 2400, "Km0": 960, "Usato": 1440}
 }
 
-# Titolo della dashboard
-st.title("Dashboard Vendite Auto - KPI Temporali")
+acquisti_data = {
+    "Settimanale": {"Nuovo": 30, "Km0": 10, "Usato": 15},
+    "Mensile": {"Nuovo": 150, "Km0": 50, "Usato": 60},
+    "Annuale": {"Nuovo": 1800, "Km0": 600, "Usato": 720}
+}
 
-# Funzione per creare rettangoli con tabelle senza bordi visibili interni
-def display_sales_metrics(period, data):
+# Titolo della dashboard
+st.title("Dashboard KPI - Vendite e Acquisti Auto")
+
+# Funzione per creare rettangoli con tabelle senza bordi interni
+def display_sales_metrics(title, period, data):
     st.markdown(f"""
     <div style="border:2px solid #4CAF50; padding: 10px; border-radius: 10px; width: 100%; height: auto; margin: 5px;">
         <table style="width:100%; text-align: center; border-collapse: collapse;">
             <tr>
-                <th colspan="3" style="font-size: 16px; padding: 5px; border: none;">Vendite Auto - {period}</th>
+                <th colspan="3" style="font-size: 16px; padding: 5px; border: none;">{title} - {period}</th>
             </tr>
             <tr>
                 <td style="font-size: 14px; font-weight: bold; padding: 5px; border: none;">Nuovo</td>
@@ -32,14 +38,27 @@ def display_sales_metrics(period, data):
     </div>
     """, unsafe_allow_html=True)
 
-# Disposizione in colonne per visualizzare i tre periodi (settimanale, mensile, annuale) su una stessa riga
+# Sezione Vendite Auto
+st.header("Vendite Auto")
 col1, col2, col3 = st.columns(3)
-
 with col1:
-    display_sales_metrics("Settimanale", vendite_data["Settimanale"])
+    display_sales_metrics("Vendite Auto", "Settimanale", vendite_data["Settimanale"])
 with col2:
-    display_sales_metrics("Mensile", vendite_data["Mensile"])
+    display_sales_metrics("Vendite Auto", "Mensile", vendite_data["Mensile"])
 with col3:
-    display_sales_metrics("Annuale", vendite_data["Annuale"])
+    display_sales_metrics("Vendite Auto", "Annuale", vendite_data["Annuale"])
+
+# Spaziatura tra le sezioni
+st.markdown("<br>", unsafe_allow_html=True)
+
+# Sezione Acquisto Auto
+st.header("Acquisto Auto")
+col4, col5, col6 = st.columns(3)
+with col4:
+    display_sales_metrics("Acquisto Auto", "Settimanale", acquisti_data["Settimanale"])
+with col5:
+    display_sales_metrics("Acquisto Auto", "Mensile", acquisti_data["Mensile"])
+with col6:
+    display_sales_metrics("Acquisto Auto", "Annuale", acquisti_data["Annuale"])
 
 st.write("Questa dashboard può essere ampliata per includere altri KPI e categorie.")

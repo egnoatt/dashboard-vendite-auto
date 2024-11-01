@@ -10,7 +10,7 @@ vendite_data = {
 # Titolo della dashboard
 st.title("Dashboard Vendite Auto - KPI Temporali")
 
-# Funzione per creare rettangoli con tabelle
+# Funzione per creare rettangoli con tabelle senza bordi visibili interni
 def display_sales_metrics(period, data):
     st.markdown(f"""
     <div style="border:2px solid #4CAF50; padding: 10px; border-radius: 10px; width: 100%; height: auto; margin: 5px;">
@@ -19,14 +19,14 @@ def display_sales_metrics(period, data):
                 <th colspan="3" style="font-size: 16px; padding: 5px;">Vendite Auto - {period}</th>
             </tr>
             <tr>
-                <td style="font-size: 14px; font-weight: bold; padding: 5px;">Nuovo</td>
-                <td style="font-size: 14px; font-weight: bold; padding: 5px;">Km0</td>
-                <td style="font-size: 14px; font-weight: bold; padding: 5px;">Usato</td>
+                <td style="font-size: 14px; font-weight: bold; padding: 5px; border: none;">Nuovo</td>
+                <td style="font-size: 14px; font-weight: bold; padding: 5px; border: none;">Km0</td>
+                <td style="font-size: 14px; font-weight: bold; padding: 5px; border: none;">Usato</td>
             </tr>
             <tr>
-                <td style="font-size: 18px; font-weight: bold; padding: 5px;">{data['Nuovo']}</td>
-                <td style="font-size: 18px; font-weight: bold; padding: 5px;">{data['Km0']}</td>
-                <td style="font-size: 18px; font-weight: bold; padding: 5px;">{data['Usato']}</td>
+                <td style="font-size: 18px; font-weight: bold; padding: 5px; border: none;">{data['Nuovo']}</td>
+                <td style="font-size: 18px; font-weight: bold; padding: 5px; border: none;">{data['Km0']}</td>
+                <td style="font-size: 18px; font-weight: bold; padding: 5px; border: none;">{data['Usato']}</td>
             </tr>
         </table>
     </div>

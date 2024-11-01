@@ -10,22 +10,22 @@ vendite_data = {
 # Titolo della dashboard
 st.title("Dashboard Vendite Auto - KPI Temporali")
 
-# Funzione per creare rettangoli con metriche di vendite, con stile centrato e rettangoli uguali
+# Funzione per creare rettangoli con metriche di vendite, con layout centrato
 def display_sales_metrics(period, data):
     st.markdown(f"""
-    <div style="border:2px solid #4CAF50; padding: 10px; border-radius: 10px; width: 100%; height: 150px; margin: 5px; text-align: center;">
-        <h4 style="margin: 0; font-size: 16px;">Vendite Auto - {period}</h4>
-        <div style="display: flex; justify-content: space-around; font-size: 14px; margin-top: 10px;">
+    <div style="border:2px solid #4CAF50; padding: 10px; border-radius: 10px; width: 100%; height: 150px; margin: 5px; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+        <h4 style="margin: 0; font-size: 16px; padding-bottom: 5px;">Vendite Auto - {period}</h4>
+        <div style="display: flex; justify-content: space-around; width: 100%; padding-top: 5px;">
             <div style="text-align: center; flex: 1;">
-                <h5 style="margin: 0; font-size: 14px;">Nuovo</h5>
+                <h5 style="margin: 0; font-size: 14px; padding-bottom: 5px;">Nuovo</h5>
                 <p style="font-size: 18px; font-weight: bold; margin: 0;">{data['Nuovo']}</p>
             </div>
             <div style="text-align: center; flex: 1;">
-                <h5 style="margin: 0; font-size: 14px;">Km0</h5>
+                <h5 style="margin: 0; font-size: 14px; padding-bottom: 5px;">Km0</h5>
                 <p style="font-size: 18px; font-weight: bold; margin: 0;">{data['Km0']}</p>
             </div>
             <div style="text-align: center; flex: 1;">
-                <h5 style="margin: 0; font-size: 14px;">Usato</h5>
+                <h5 style="margin: 0; font-size: 14px; padding-bottom: 5px;">Usato</h5>
                 <p style="font-size: 18px; font-weight: bold; margin: 0;">{data['Usato']}</p>
             </div>
         </div>

@@ -16,7 +16,7 @@ def display_sales_metrics(period, data):
     <div style="border:2px solid #4CAF50; padding: 10px; border-radius: 10px; width: 100%; height: auto; margin: 5px;">
         <table style="width:100%; text-align: center; border-collapse: collapse;">
             <tr>
-                <th colspan="3" style="font-size: 16px; padding: 5px;">Vendite Auto - {period}</th>
+                <th colspan="3" style="font-size: 16px; padding: 5px; border: none;">Vendite Auto - {period}</th>
             </tr>
             <tr>
                 <td style="font-size: 14px; font-weight: bold; padding: 5px; border: none;">Nuovo</td>

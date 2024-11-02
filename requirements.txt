@@ -1,5 +1,6 @@
 streamlit
 matplotlib
 pandas
-postgrest-py==0.4.0
+supabase-py
 Pillow==10.0.0
+postgrest-py

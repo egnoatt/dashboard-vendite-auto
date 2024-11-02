@@ -1,18 +1,18 @@
 import streamlit as st
-from supabase import create_client, Client
+from postgrest import Postgrest
 import pandas as pd
 
 # Impostazioni di connessione Supabase
-url = "https://nptwtnrcbhnymmxnoicz.supabase.co"  # Sostituisci con l'URL Supabase
-key = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5wdHd0bnJjYmhueW1teG5vaWN6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzA1NTEwOTMsImV4cCI6MjA0NjEyNzA5M30.HtLr0d0dC6qUoZEqFwi9pMrKLSW1Luwm-Vu9u86js0Y"  # Sostituisci con la tua chiave API
+url = "https://nptwtnrcbhnymmxnoicz.supabase.co/rest/v1"
+key = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5wdHd0bnJjYmhueW1teG5vaWN6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzA1NTEwOTMsImV4cCI6MjA0NjEyNzA5M30.HtLr0d0dC6qUoZEqFwi9pMrKLSW1Luwm-Vu9u86js0Y"
 
-# Creazione del client Supabase
-supabase: Client = create_client(url, key)
+# Crea un client per connettersi al database
+client = Postgrest(url, headers={"apikey": key})
 
 # Funzione per ottenere i dati
 def get_data():
-    response = supabase.table("vendite_auto").select("*").execute()
-    data = response.data
+    response = client.select("vendite_auto", "*")
+    data = response.json()
     df = pd.DataFrame(data)
     return df
 

@@ -18,11 +18,10 @@ df = pd.DataFrame(data)
 
 # Funzione per ottenere le vendite per un periodo specifico
 def get_sales_for_period(df, period="settimanale"):
-    # Usa una data fittizia per il testing
-    today = datetime(2023, 11, 1)
+    today = datetime(2023, 11, 1)  # Usa una data fittizia per il testing
     
     if period == "settimanale":
-        start_date = today - timedelta(days=today.weekday())  # Inizio della settimana corrente (lunedì)
+        start_date = today - timedelta(days=today.weekday())  # Inizio della settimana corrente
         filtered_df = df[(df["data"] >= start_date) & (df["data"] <= today)]
         
     elif period == "mensile":
@@ -33,7 +32,7 @@ def get_sales_for_period(df, period="settimanale"):
         start_date = today.replace(month=1, day=1)  # Inizio dell'anno corrente
         filtered_df = df[(df["data"] >= start_date) & (df["data"] <= today)]
         
-    # Somma le vendite per Nuovo, Km0 e Usato
+    # Somma le vendite per Nuovo, Km0 e Usato per il periodo specificato
     sales_data = {
         "Nuovo": filtered_df["Nuovo"].sum(),
         "Km0": filtered_df["Km0"].sum(),

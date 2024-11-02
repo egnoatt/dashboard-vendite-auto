@@ -2,3 +2,4 @@ streamlit
 matplotlib
 pandas
 supabase-py
+Pillow==8.4.0

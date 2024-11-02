@@ -1,5 +1,5 @@
 import streamlit as st
-from postgrest_py import Postgrest
+from postgrest import Postgrest
 import pandas as pd
 
 # Impostazioni di connessione Supabase

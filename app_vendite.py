@@ -1,16 +1,17 @@
 import streamlit as st
 import pandas as pd
 from datetime import datetime, timedelta
+import numpy as np
 
-# Simulazione di un dataset giornaliero per "Vendite Auto" fino alla fine del 2024
+# Simulazione di un dataset giornaliero per "Vendite Auto" fino alla fine del 2024 con valori casuali
 date_range = pd.date_range(start="2023-01-01", end="2024-12-31")  # Date giornaliere fino alla fine del 2024
 num_days = len(date_range)
 
 data = {
     "data": date_range,
-    "Nuovo": [50] * num_days,  # Lista della stessa lunghezza delle date
-    "Km0": [20] * num_days,    # Lista della stessa lunghezza delle date
-    "Usato": [30] * num_days   # Lista della stessa lunghezza delle date
+    "Nuovo": np.random.randint(40, 60, size=num_days),  # Valori casuali tra 40 e 60 per ogni giorno
+    "Km0": np.random.randint(15, 25, size=num_days),    # Valori casuali tra 15 e 25 per ogni giorno
+    "Usato": np.random.randint(25, 35, size=num_days)   # Valori casuali tra 25 e 35 per ogni giorno
 }
 
 # Creazione del DataFrame

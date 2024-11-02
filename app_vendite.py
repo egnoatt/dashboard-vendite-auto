@@ -3,11 +3,14 @@ import pandas as pd
 from datetime import datetime, timedelta
 
 # Simulazione di un dataset giornaliero per "Vendite Auto" fino alla fine del 2024
+date_range = pd.date_range(start="2023-01-01", end="2024-12-31")  # Date giornaliere fino alla fine del 2024
+num_days = len(date_range)
+
 data = {
-    "data": pd.date_range(start="2023-01-01", end="2024-12-31"),  # Date giornaliere fino alla fine del 2024
-    "Nuovo": [50] * 730,  # Dati simulati per vendite "Nuovo"
-    "Km0": [20] * 730,    # Dati simulati per vendite "Km0"
-    "Usato": [30] * 730   # Dati simulati per vendite "Usato"
+    "data": date_range,
+    "Nuovo": [50] * num_days,  # Lista della stessa lunghezza delle date
+    "Km0": [20] * num_days,    # Lista della stessa lunghezza delle date
+    "Usato": [30] * num_days   # Lista della stessa lunghezza delle date
 }
 
 # Creazione del DataFrame

@@ -1,7 +1,6 @@
 streamlit
 matplotlib
 pandas
-supabase-py
+supabase-py==0.2.7
 Pillow==10.0.0
 setuptools
-git+https://github.com/supabase-community/postgrest-py.git

@@ -17,8 +17,8 @@ supabase: Client = create_client(url, key)
 def get_data():
     try:
         response = supabase.table("vendite_auto").select("*").execute()
-        if response.status_code != 200:
-            st.error(f"Errore durante il recupero dei dati: {response.data}")
+        if response.error:
+            st.error(f"Errore durante il recupero dei dati: {response.error}")
             return pd.DataFrame()
         data = response.data
         if not data:
@@ -93,8 +93,8 @@ with st.form("inserimento_vendite"):
         # Inserisci il nuovo record nel database
         try:
             response = supabase.table("vendite_auto").insert(nuovo_record).execute()
-            if response.status_code != 201:
-                st.error(f"Errore durante l'inserimento dei dati: {response.data}")
+            if response.error:
+                st.error(f"Errore durante l'inserimento dei dati: {response.error}")
             else:
                 st.success("Dati inseriti con successo!")
                 # Aggiorna i dati visualizzati

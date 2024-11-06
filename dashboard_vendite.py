@@ -19,6 +19,7 @@ def get_data():
         response = supabase.table("vendite_auto").select("*").execute()
         if response.error:
             st.error(f"Errore durante il recupero dei dati: {response.error}")
+            st.write("Dettagli dell'errore:", response.error)
             return pd.DataFrame()
         data = response.data
         if not data:
@@ -32,35 +33,6 @@ def get_data():
 
 # Configura Streamlit
 st.title("Dashboard Vendite Auto")
-
-# Ottieni i dati e mostra nella dashboard
-df = get_data()
-
-if not df.empty:
-    st.write("### Dati Vendite Auto")
-    st.dataframe(df)
-
-    # Esempio di visualizzazione grafica
-    st.write("### Vendite per Tipo di Veicolo")
-    sales_summary = df.groupby("tipo_veicolo")["quantita"].sum().reset_index()
-    st.bar_chart(sales_summary.set_index("tipo_veicolo"))
-
-    # Visualizzazione del Prezzo Medio di Vendita
-    st.write("### Prezzo Medio di Vendita per Tipo di Veicolo")
-    if 'prezzo_vendita' in df.columns:
-        price_summary = df.groupby("tipo_veicolo")["prezzo_vendita"].mean().reset_index()
-        st.bar_chart(price_summary.set_index("tipo_veicolo"))
-    else:
-        st.warning("La colonna 'prezzo_vendita' non è disponibile.")
-
-    # Visualizzazione dei Dati di Acquisto
-    st.write("### Dati di Acquisto")
-    if 'data_acquisto' in df.columns and 'prezzo_acquisto' in df.columns:
-        st.dataframe(df[['data_acquisto', 'prezzo_acquisto', 'luogo_vendita']])
-    else:
-        st.warning("Le colonne di acquisto non sono disponibili.")
-else:
-    st.write("Nessun dato disponibile.")
 
 # Sezione per inserire nuovi dati
 st.write("### Inserisci Nuove Vendite")
@@ -81,7 +53,7 @@ with st.form("inserimento_vendite"):
     if submitted:
         # Prepara i dati per l'inserimento
         nuovo_record = {
-            "data": data_vendita.isoformat(),
+            "data_vendita": data_vendita.isoformat(),
             "tipo_veicolo": tipo_veicolo,
             "quantita": quantita,
             "prezzo_vendita": prezzo_vendita,
@@ -97,7 +69,42 @@ with st.form("inserimento_vendite"):
                 st.error(f"Errore durante l'inserimento dei dati: {response.error}")
             else:
                 st.success("Dati inseriti con successo!")
-                # Aggiorna i dati visualizzati
-                df = get_data()
+                # Ricarica l'applicazione per aggiornare i dati
+                st.experimental_rerun()
         except Exception as e:
             st.error(f"Errore durante l'inserimento dei dati: {e}")
+
+# Ottieni i dati e mostra nella dashboard
+df = get_data()
+
+if not df.empty:
+    st.write("### Dati Vendite Auto")
+    st.dataframe(df)
+
+    # Visualizza le colonne presenti
+    st.write("Colonne disponibili:", df.columns.tolist())
+
+    # Esempio di visualizzazione grafica
+    st.write("### Vendite per Tipo di Veicolo")
+    if 'tipo_veicolo' in df.columns and 'quantita' in df.columns:
+        sales_summary = df.groupby("tipo_veicolo")["quantita"].sum().reset_index()
+        st.bar_chart(sales_summary.set_index("tipo_veicolo"))
+    else:
+        st.warning("Le colonne 'tipo_veicolo' e 'quantita' non sono disponibili.")
+
+    # Visualizzazione del Prezzo Medio di Vendita
+    st.write("### Prezzo Medio di Vendita per Tipo di Veicolo")
+    if 'prezzo_vendita' in df.columns:
+        price_summary = df.groupby("tipo_veicolo")["prezzo_vendita"].mean().reset_index()
+        st.bar_chart(price_summary.set_index("tipo_veicolo"))
+    else:
+        st.warning("La colonna 'prezzo_vendita' non è disponibile.")
+
+    # Visualizzazione dei Dati di Acquisto
+    st.write("### Dati di Acquisto")
+    if all(col in df.columns for col in ['data_acquisto', 'prezzo_acquisto', 'luogo_vendita']):
+        st.dataframe(df[['data_acquisto', 'prezzo_acquisto', 'luogo_vendita']])
+    else:
+        st.warning("Le colonne di acquisto non sono disponibili.")
+else:
+    st.write("Nessun dato disponibile.")

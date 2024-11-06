@@ -1,6 +1,6 @@
 streamlit
 matplotlib
 pandas
-supabase==0.2.7
+supabase
 Pillow==10.0.0
 setuptools

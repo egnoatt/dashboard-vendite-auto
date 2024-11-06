@@ -62,7 +62,7 @@ if not df.empty:
 else:
     st.write("Nessun dato disponibile.")
 
-# Aggiungi una sezione per inserire nuovi dati
+# Sezione per inserire nuovi dati
 st.write("### Inserisci Nuove Vendite")
 
 with st.form("inserimento_vendite"):
@@ -90,15 +90,14 @@ with st.form("inserimento_vendite"):
             "prezzo_acquisto": prezzo_acquisto
         }
 
-# Inserisci il nuovo record nel database
-try:
-    response = supabase.table("vendite_auto").insert(nuovo_record).execute()
-    # Controlla se ci sono errori nella risposta
-    if response.status_code != 201:
-        st.error(f"Errore durante l'inserimento dei dati: {response.data}")
-    else:
-        st.success("Dati inseriti con successo!")
-        # Aggiorna i dati visualizzati
-        df = get_data()
-except Exception as e:
-    st.error(f"Errore durante l'inserimento dei dati: {e}")
+        # Inserisci il nuovo record nel database
+        try:
+            response = supabase.table("vendite_auto").insert(nuovo_record).execute()
+            if response.status_code != 201:
+                st.error(f"Errore durante l'inserimento dei dati: {response.data}")
+            else:
+                st.success("Dati inseriti con successo!")
+                # Aggiorna i dati visualizzati
+                df = get_data()
+        except Exception as e:
+            st.error(f"Errore durante l'inserimento dei dati: {e}")

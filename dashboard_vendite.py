@@ -3,14 +3,17 @@ from supabase import create_client, Client
 import pandas as pd
 
 # Impostazioni di connessione Supabase
-url = "https://nptwtnrcbhnymmxnoicz.supabase.co/rest/v1"
-key = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5wdHd0bnJjYmhueW1teG5vaWN6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzA1NTEwOTMsImV4cCI6MjA0NjEyNzA5M30.HtLr0d0dC6qUoZEqFwi9pMrKLSW1Luwm-Vu9u86js0Y"
+url = "https://nptwtnrcbhnymmxnoicz.supabase.co"
+key = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
 
 supabase: Client = create_client(url, key)
 
 # Funzione per ottenere i dati
 def get_data():
     response = supabase.table("vendite_auto").select("*").execute()
+    if response.error:
+        st.error(f"Errore durante il recupero dei dati: {response.error}")
+        return pd.DataFrame()
     data = response.data
     df = pd.DataFrame(data)
     return df

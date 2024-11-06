@@ -3,4 +3,4 @@ matplotlib
 pandas
 supabase-py
 Pillow==10.0.0
-postgrest-py
+postgrest

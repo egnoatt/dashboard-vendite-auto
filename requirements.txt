@@ -3,4 +3,5 @@ matplotlib
 pandas
 supabase-py
 Pillow==10.0.0
-postgrest-py
+setuptools
+git+https://github.com/supabase-community/postgrest-py.git

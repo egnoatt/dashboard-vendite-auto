@@ -10,13 +10,17 @@ supabase: Client = create_client(url, key)
 
 # Funzione per ottenere i dati
 def get_data():
-    response = supabase.table("vendite_auto").select("*").execute()
-    if response.error:
-        st.error(f"Errore durante il recupero dei dati: {response.error}")
+    try:
+        response = supabase.table("vendite_auto").select("*").execute()
+        if response.error:
+            st.error(f"Errore durante il recupero dei dati: {response.error.message}")
+            return pd.DataFrame()
+        data = response.data
+        df = pd.DataFrame(data)
+        return df
+    except Exception as e:
+        st.error(f"Errore: {e}")
         return pd.DataFrame()
-    data = response.data
-    df = pd.DataFrame(data)
-    return df
 
 # Configura Streamlit
 st.title("Dashboard Vendite Auto")
